@@ -1,0 +1,63 @@
+/* Базовые стили и темы */
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Layout приложения */
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+header button, header input, header select {
+  margin: 5px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.column {
+  flex: 1;
+  margin: 0 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-height: 200px; /* Чтобы колонки были видимы даже пустыми */
+}
+
+.column h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Для тёмной темы — инвертируем цвета */
+body.dark header button, body.dark header input, body.dark header select {
+  background-color: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark .column {
+  border-color: #444;
+  background-color: #1e1e1e;
+}

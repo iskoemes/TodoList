@@ -1,0 +1,107 @@
+/* Карточка задачи */
+.card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  margin: 0 0 5px;
+}
+
+.card p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.card span {
+  display: block;
+  font-size: 0.9em;
+}
+
+.card select, .card button {
+  margin-top: 5px;
+  padding: 5px;
+}
+
+.overdue {
+  background-color: #ffebee;
+  border-color: #f44336;
+}
+
+.overdue span:last-child {
+  color: #f44336;
+  font-weight: bold;
+}
+
+/* Модальное окно */
+/* Модальное окно */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Увеличил opacity для лучшего затемнения */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #ffffff; /* Всегда белый по умолчанию для видимости */
+  padding: 30px; /* Больше padding для пространства */
+  border-radius: 8px;
+  width: 450px; /* Шире для формы */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Тень для выделения */
+  position: relative;
+}
+
+.modal input, .modal textarea, .modal select {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 16px; /* Больше шрифт для видимости */
+}
+
+.modal button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal button:disabled {
+  background-color: #cccccc;
+}
+
+.error {
+  color: #ff0000;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Для тёмной темы — переопределяем модалку */
+body.dark .modal {
+  background: #1e1e1e; /* Тёмный фон */
+  color: #ffffff; /* Белый текст */
+}
+
+body.dark .modal input, body.dark .modal textarea, body.dark .modal select {
+  background: #333333;
+  color: #ffffff;
+  border-color: #555555;
+}
+
+body.dark .modal button {
+  background-color: #0056b3; /* Тёмный синий */
+}
