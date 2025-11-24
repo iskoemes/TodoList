@@ -1,43 +1,120 @@
 /* Карточка задачи */
+:root {
+  --primary-color: #007bff; /* Основной акцентный цвет - синий */
+  --primary-hover: #0056b3; /* Темный синий для hover */
+  --secondary-color: #6c757d; /* Серый для второстепенных элементов */
+  --accent-color: #17a2b8; /* Бирюзовый для акцентов, чтобы цвета гармонировали */
+  --overdue-color: #f44336; /* Цвет для просроченных задач - красный */
+  --shadow-light: rgba(0, 0, 0, 0.15); /* Усиленная тень для светлой темы */
+  --shadow-dark: rgba(255, 255, 255, 0.15); /* Усиленная тень для темной темы */
+  --transition-time: 0.3s ease; /* Плавные переходы */
+  --border-radius: 8px; /* Скругление углов */
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .card {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 20px; /* Больше padding для комфорта */
+  margin: 20px 0; /* Больше маржина */
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px var(--shadow-light);
+  transition: transform var(--transition-time), box-shadow var(--transition-time);
+  animation: fadeIn 0.6s ease-in-out;
+  font-family: var(--font-family);
+}
+
+.card:hover {
+  transform: translateY(-8px); /* Сильнее подъем для динамики */
+  box-shadow: 0 8px 20px var(--shadow-light);
+}
+
+body.dark .card {
+  background-color: #1e1e1e; /* Гармоничный темный фон */
+  box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
+body.dark .card:hover {
+  box-shadow: 0 8px 20px var(--shadow-dark);
 }
 
 .card h3 {
-  margin: 0 0 5px;
+  margin: 0 0 10px;
+  font-size: 1.3em; /* Чуть больше для выделения */
+  color: var(--primary-color);
+  text-transform: capitalize;
+  border-bottom: 1px solid var(--accent-color); /* Подчеркивание для стиля */
+  padding-bottom: 5px;
 }
 
 .card p {
-  margin: 5px 0;
-  color: #666;
+  margin: 10px 0;
+  color: #555;
+  font-size: 1em;
+  line-height: 1.5; /* Лучшая читаемость */
+}
+
+body.dark .card p {
+  color: #ccc; /* Светлее для контраста */
 }
 
 .card span {
   display: block;
   font-size: 0.9em;
+  color: var(--secondary-color);
+  margin: 5px 0;
+}
+
+body.dark .card span {
+  color: #aaa;
 }
 
 .card select, .card button {
-  margin-top: 5px;
-  padding: 5px;
+  margin-top: 10px;
+  padding: 10px 15px; /* Больше padding */
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+  transition: transform var(--transition-time), background-color var(--transition-time), box-shadow var(--transition-time), border-color var(--transition-time);
+  margin-right: 10px; /* Расстояние между кнопками/селектами */
+}
+
+.card select:focus, .card button:hover {
+  transform: scale(1.03);
+  background-color: var(--primary-hover);
+  box-shadow: 0 2px 8px var(--shadow-light);
+  border-color: var(--accent-color);
+}
+
+body.dark .card select, body.dark .card button {
+  background-color: var(--primary-hover);
+  border-color: #444;
+}
+
+body.dark .card select:focus, body.dark .card button:hover {
+  background-color: var(--primary-color);
+  box-shadow: 0 2px 8px var(--shadow-dark);
+  border-color: var(--accent-color);
 }
 
 .overdue {
   background-color: #ffebee;
-  border-color: #f44336;
+  border-left: 6px solid var(--overdue-color); /* Толще бордер для акцента */
+}
+
+body.dark .overdue {
+  background-color: #2a1b1b; /* Темный красный фон для гармонии */
 }
 
 .overdue span:last-child {
-  color: #f44336;
+  color: var(--overdue-color);
   font-weight: bold;
+  font-size: 1em; /* Чуть больше для выделения */
 }
 
-/* Модальное окно */
 /* Модальное окно */
 .modal-overlay {
   position: fixed;
@@ -45,55 +122,48 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* Увеличил opacity для лучшего затемнения */
+  background: rgba(0, 0, 0, 0.75); /* Еще темнее для фокуса */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  opacity: 0;
+  animation: fadeInOverlay 0.4s ease-in-out forwards;
 }
 
 .modal {
-  background: #ffffff; /* Всегда белый по умолчанию для видимости */
-  padding: 30px; /* Больше padding для пространства */
-  border-radius: 8px;
-  width: 450px; /* Шире для формы */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Тень для выделения */
+  background: #ffffff;
+  padding: 35px; /* Больше padding */
+  border-radius: 12px; /* Больше скругление */
+  width: 90%;
+  max-width: 550px; /* Шире для форм */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Сильнее тень */
   position: relative;
+  transform: scale(0.95);
+  opacity: 0;
+  animation: modalPop 0.4s ease-in-out 0.1s forwards;
+  font-family: var(--font-family);
+}
+
+body.dark .modal {
+  background: #1e1e1e;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
 }
 
 .modal input, .modal textarea, .modal select {
   width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  font-size: 16px; /* Больше шрифт для видимости */
+  margin: 15px 0; /* Больше маржина */
+  padding: 14px; /* Больше padding */
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-size: 1.05em; /* Чуть больше шрифт */
+  transition: border-color var(--transition-time), box-shadow var(--transition-time);
 }
 
-.modal button {
-  padding: 10px 15px;
-  margin-right: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.modal button:disabled {
-  background-color: #cccccc;
-}
-
-.error {
-  color: #ff0000;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-/* Для тёмной темы — переопределяем модалку */
-body.dark .modal {
-  background: #1e1e1e; /* Тёмный фон */
-  color: #ffffff; /* Белый текст */
+.modal input:focus, .modal textarea:focus, .modal select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.25); /* Мягче свечение */
 }
 
 body.dark .modal input, body.dark .modal textarea, body.dark .modal select {
@@ -102,6 +172,127 @@ body.dark .modal input, body.dark .modal textarea, body.dark .modal select {
   border-color: #555555;
 }
 
+body.dark .modal input:focus, body.dark .modal textarea:focus, body.dark .modal select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.25);
+}
+
+.modal button {
+  padding: 14px 20px; /* Больше padding */
+  margin-right: 15px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1em;
+  transition: transform var(--transition-time), background-color var(--transition-time), box-shadow var(--transition-time);
+}
+
+.modal button:hover {
+  transform: scale(1.03);
+  background-color: var(--primary-hover);
+  box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.modal button:disabled {
+  background-color: var(--secondary-color);
+  cursor: not-allowed;
+  transform: none;
+}
+
 body.dark .modal button {
-  background-color: #0056b3; /* Тёмный синий */
+  background-color: var(--primary-hover);
+}
+
+body.dark .modal button:hover {
+  background-color: var(--primary-color);
+  box-shadow: 0 2px 8px var(--shadow-dark);
+}
+
+.error {
+  color: #ff0000;
+  font-weight: bold;
+  margin: 15px 0;
+  font-size: 1.05em;
+  text-align: center; /* Центрирование для внимания */
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Мобильная версия (улучшенный responsive design) */
+@media (max-width: 1024px) {
+  .card {
+    padding: 18px;
+    margin: 18px 0;
+  }
+
+  .modal {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 15px;
+    margin: 15px 0;
+  }
+
+  .card h3 {
+    font-size: 1.2em;
+  }
+
+  .modal {
+    padding: 25px;
+    width: 95%;
+    max-width: none; /* Полная ширина на мобильных */
+  }
+
+  .modal input, .modal textarea, .modal select {
+    padding: 12px;
+    font-size: 1em;
+    margin: 12px 0;
+  }
+
+  .modal button {
+    padding: 12px 18px;
+    width: 100%; /* Полная ширина кнопок */
+    margin: 8px 0; /* Стек для мобильных */
+  }
+}
+
+@media (max-width: 480px) {
+  .card p, .card span {
+    font-size: 0.9em;
+  }
+
+  .card h3 {
+    font-size: 1.1em;
+  }
+
+  .error {
+    font-size: 1em;
+  }
+
+  .modal {
+    padding: 20px;
+  }
+
+  .modal input, .modal textarea, .modal select {
+    font-size: 0.95em;
+  }
 }
