@@ -14,11 +14,11 @@ function TaskCard({ task, onUpdate, onDelete, onEdit, isSelected, onSelect }) {
       <span>Приоритет: {task.priority}</span>
       {task.deadline && <span>Дедлайн: {format(new Date(task.deadline), 'dd.MM.yyyy')}</span>}
       {isOverdue && <span>⚠️ Просрочено</span>}
-      <select value={task.status} onChange={e => onUpdate({ ...task, status: e.target.value })}>
+      {/* <select value={task.status} onChange={e => onUpdate({ ...task, status: e.target.value })}>
         <option value="todo">To Do</option>
         <option value="in-progress">In Progress</option>
         <option value="completed">Completed</option>
-      </select>
+      </select> */}
       <button onClick={onEdit}>Редактировать</button>
       <button onClick={() => onDelete(task.id)}>Удалить</button>
     </div>
