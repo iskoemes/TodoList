@@ -10,6 +10,9 @@
   --transition-time: 0.3s ease; /* Плавные переходы */
   --border-radius: 8px; /* Скругление углов */
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --button-width: 120px; /* Фиксированная ширина для кнопок, чтобы они были ровными и маленькими */
+  --button-padding: 8px 12px; /* Меньше padding для маленьких кнопок */
+  --button-font-size: 0.9em; /* Меньше шрифт для маленьких кнопок */
 }
 
 .card {
@@ -72,15 +75,20 @@ body.dark .card span {
 .card select,
 .card button {
   margin-top: 10px;
-  padding: 10px 15px; /* Больше padding */
+  padding: var(--button-padding);
   border: 1px solid transparent;
   border-radius: var(--border-radius);
   background-color: var(--primary-color);
   color: white;
   cursor: pointer;
-  font-size: 1em;
+  font-size: var(--button-font-size);
   transition: transform var(--transition-time), background-color var(--transition-time), box-shadow var(--transition-time), border-color var(--transition-time);
   margin-right: 10px; /* Расстояние между кнопками/селектами */
+  width: var(--button-width); /* Фиксированная ширина */
+  text-align: center; /* Центрирование текста */
+  display: inline-block; /* Для центрирования */
+  min-height: 36px; /* Минимальная высота для touch, но меньше для маленьких кнопок */
+  touch-action: manipulation;
 }
 
 .card select:focus,
@@ -165,6 +173,8 @@ body.dark .modal {
   border-radius: var(--border-radius);
   font-size: 1.05em; /* Чуть больше шрифт */
   transition: border-color var(--transition-time), box-shadow var(--transition-time);
+  touch-action: manipulation;
+  min-height: 48px;
 }
 
 .modal input:focus,
@@ -190,15 +200,20 @@ body.dark .modal select:focus {
 }
 
 .modal button {
-  padding: 14px 20px; /* Больше padding */
+  padding: var(--button-padding);
   margin-right: 15px;
   background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
-  font-size: 1em;
+  font-size: var(--button-font-size);
   transition: transform var(--transition-time), background-color var(--transition-time), box-shadow var(--transition-time);
+  touch-action: manipulation;
+  width: var(--button-width); /* Фиксированная ширина */
+  text-align: center; /* Центрирование текста */
+  display: inline-block;
+  min-height: 36px; /* Меньше для маленьких кнопок */
 }
 
 .modal button:hover {
@@ -266,16 +281,19 @@ body.dark .modal button:hover {
 button,
 input[type="button"],
 input[type="submit"] {
-  padding: 12px 18px;
+  padding: var(--button-padding);
   border-radius: var(--border-radius);
   background-color: var(--primary-color);
   color: white;
   cursor: pointer;
-  font-size: 1em;
+  font-size: var(--button-font-size);
   transition: transform var(--transition-time), background-color var(--transition-time), box-shadow var(--transition-time);
   border: none;
-  min-width: 120px; /* Минимальная ширина для touch */
-  touch-action: manipulation; /* Улучшает поведение на touch устройствах */
+  width: var(--button-width); /* Фиксированная ширина */
+  text-align: center; /* Центрирование текста */
+  display: inline-block;
+  min-height: 36px; /* Меньше для маленьких кнопок */
+  touch-action: manipulation;
 }
 
 button:hover,
@@ -300,6 +318,32 @@ body.dark input[type="submit"]:hover {
   box-shadow: 0 3px 10px var(--shadow-dark);
 }
 
+/* Общие стили для полей ввода и селектов */
+input[type="text"],
+input[type="search"],
+select,
+textarea {
+  padding: var(--button-padding);
+  border-radius: var(--border-radius);
+  font-size: var(--button-font-size);
+  border: 1px solid #ddd;
+  width: var(--button-width); /* Фиксированная ширина для ровности */
+  text-align: center; /* Центрирование текста */
+  display: inline-block;
+  min-height: 36px;
+  touch-action: manipulation;
+  box-sizing: border-box;
+}
+
+body.dark input[type="text"],
+body.dark input[type="search"],
+body.dark select,
+body.dark textarea {
+  background: #333333;
+  color: #ffffff;
+  border-color: #555555;
+}
+
 /* Мобильная версия (улучшенный responsive design) */
 @media (max-width: 1024px) {
   .card {
@@ -308,6 +352,9 @@ body.dark input[type="submit"]:hover {
   }
   .modal {
     max-width: 90%;
+  }
+  :root {
+    --button-width: 100px; /* Чуть меньше на планшетах */
   }
 }
 
@@ -327,39 +374,70 @@ body.dark input[type="submit"]:hover {
   .modal input,
   .modal textarea,
   .modal select {
-    padding: 12px;
-    font-size: 1em;
+    padding: var(--button-padding);
+    font-size: var(--button-font-size);
     margin: 12px 0;
+    width: var(--button-width); /* Ровные маленькие */
+    text-align: center;
+    min-height: 36px;
   }
   .modal button {
-    padding: 12px 18px;
-    width: 100%; /* Полная ширина кнопок */
-    margin: 8px 0; /* Стек для мобильных */
+    padding: var(--button-padding);
+    width: var(--button-width);
+    margin: 8px auto; /* Центрирование кнопок */
+    display: block; /* Для центрирования */
+    min-height: 36px;
   }
-  /* Улучшения для всех кнопок на мобильных */
+  /* Улучшения для всех кнопок и полей на мобильных */
   button,
   input[type="button"],
-  input[type="submit"] {
-    width: 100%; /* Полная ширина для легкого нажатия */
-    padding: 14px 20px; /* Больше padding для пальцев */
-    font-size: 1.1em; /* Чуть больше текст для читаемости */
-    min-height: 48px; /* Стандарт для touch */
-    margin: 8px 0; /* Больше пространства между кнопками */
+  input[type="submit"],
+  input[type="text"],
+  input[type="search"],
+  select,
+  textarea {
+    width: var(--button-width); /* Ровные маленькие */
+    padding: var(--button-padding);
+    font-size: var(--button-font-size);
+    min-height: 36px;
+    margin: 8px auto; /* Центрирование */
+    display: block; /* Для центрирования */
+    text-align: center;
   }
   .card button,
   .card select {
-    width: 100%; /* Полная ширина */
-    padding: 14px 20px; /* Увеличенный padding для touch */
-    min-height: 48px; /* Минимальная высота для touch */
+    width: var(--button-width);
+    padding: var(--button-padding);
+    min-height: 36px;
+    margin: 8px auto;
+    display: block;
+  }
+  .task-form {
+    align-items: center; /* Центрирование элементов формы */
+  }
+  .task-form input,
+  .task-form textarea,
+  .task-form select {
+    width: var(--button-width);
+    padding: var(--button-padding);
+    min-height: 36px;
+    text-align: center;
   }
   .modal-buttons {
     flex-direction: column; /* Стек для мобильных */
     gap: 10px;
+    justify-content: center;
+    align-items: center; /* Центрирование */
   }
   .modal-buttons button {
-    width: 100%;
-    padding: 14px 20px;
-    min-height: 48px;
+    width: var(--button-width);
+    padding: var(--button-padding);
+    min-height: 36px;
+  }
+  :root {
+    --button-width: 100px; /* Маленькие на мобильных */
+    --button-padding: 6px 10px; /* Еще меньше padding */
+    --button-font-size: 0.85em; /* Меньше шрифт */
   }
 }
 
@@ -372,18 +450,22 @@ body.dark input[type="submit"]:hover {
 .task-form input,
 .task-form textarea,
 .task-form select {
-  width: 100%;
-  max-width: 400px; /* Ограничиваем ширину, чтобы не растягивались */
+  width: var(--button-width);
+  max-width: 400px; /* Ограничиваем, но используем var для ровности */
   margin: 10px 0;
-  padding: 10px;
-  font-size: 1em;
-  border-radius: 8px;
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  border-radius: var(--border-radius);
   border: 1px solid #ccc;
   box-sizing: border-box;
+  text-align: center;
+  min-height: 36px;
+  touch-action: manipulation;
 }
 
 .task-form textarea {
   resize: vertical; /* Позволяем менять высоту, ширина фиксирована */
+  min-height: 80px; /* Меньше для минимализма */
 }
 
 .modal-buttons {
@@ -391,17 +473,22 @@ body.dark input[type="submit"]:hover {
   justify-content: center;
   gap: 15px; /* Расстояние между кнопками */
   margin-top: 15px;
+  align-items: center; /* Центрирование */
 }
 
 .modal-buttons button {
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: var(--button-padding);
+  border-radius: var(--border-radius);
   border: none;
   cursor: pointer;
-  font-size: 1em;
+  font-size: var(--button-font-size);
   background-color: var(--primary-color);
   color: white;
   transition: 0.3s;
+  touch-action: manipulation;
+  width: var(--button-width);
+  text-align: center;
+  min-height: 36px;
 }
 
 .modal-buttons button:hover {
@@ -425,27 +512,48 @@ body.dark input[type="submit"]:hover {
   .modal input,
   .modal textarea,
   .modal select {
-    font-size: 0.95em;
+    font-size: var(--button-font-size);
+    padding: var(--button-padding);
+    min-height: 36px;
   }
-  /* Дополнительные улучшения для кнопок на очень маленьких экранах */
+  /* Дополнительные улучшения для кнопок и полей на очень маленьких экранах */
   button,
   input[type="button"],
-  input[type="submit"] {
-    font-size: 1em; /* Нормальный размер текста */
-    padding: 16px 22px; /* Еще больше padding */
-    min-height: 52px; /* Чуть выше для комфорта */
+  input[type="submit"],
+  input[type="text"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: var(--button-font-size);
+    padding: var(--button-padding);
+    min-height: 36px;
+    width: var(--button-width);
+    margin: 8px auto;
+    display: block;
+    text-align: center;
   }
   .card button,
   .card select {
-    padding: 16px 22px;
-    min-height: 52px;
+    padding: var(--button-padding);
+    min-height: 36px;
   }
   .modal button {
-    padding: 16px 22px;
-    min-height: 52px;
+    padding: var(--button-padding);
+    min-height: 36px;
+  }
+  .task-form input,
+  .task-form textarea,
+  .task-form select {
+    padding: var(--button-padding);
+    min-height: 36px;
   }
   .modal-buttons button {
-    padding: 16px 22px;
-    min-height: 52px;
+    padding: var(--button-padding);
+    min-height: 36px;
+  }
+  :root {
+    --button-width: 90px; /* Еще меньше на маленьких экранах */
+    --button-padding: 5px 8px;
+    --button-font-size: 0.8em;
   }
 }
