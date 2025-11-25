@@ -100,7 +100,7 @@ body.dark header button:hover, body.dark header input:focus, body.dark header se
 }
 
 .column:hover {
-  transform: translateY(-8px); /* Сильнее подъем для динамики */
+  /* transform: translateY(-8px); Сильнее подъем для динамики */
   box-shadow: 0 8px 20px var(--shadow-light);
 }
 
