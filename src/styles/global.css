@@ -50,7 +50,9 @@ body.dark header {
   box-shadow: 0 4px 12px var(--shadow-dark);
 }
 
-header button, header input, header select {
+header button,
+header input,
+header select {
   flex: 1 1 auto; /* Гибкий рост для лучшего размещения */
   margin: 5px;
   padding: 12px 18px; /* Больше padding для комфорта */
@@ -63,19 +65,25 @@ header button, header input, header select {
   transition: transform var(--transition-time), background-color var(--transition-time), box-shadow var(--transition-time), border-color var(--transition-time);
 }
 
-header button:hover, header input:focus, header select:focus {
+header button:hover,
+header input:focus,
+header select:focus {
   transform: scale(1.03); /* Меньший scale для плавности */
   box-shadow: 0 3px 10px var(--shadow-light);
   background-color: var(--primary-hover);
   border-color: var(--accent-color); /* Акцент на фокусе */
 }
 
-body.dark header button, body.dark header input, body.dark header select {
+body.dark header button,
+body.dark header input,
+body.dark header select {
   background-color: var(--primary-hover);
   border-color: #444; /* Граница в темной теме для контраста */
 }
 
-body.dark header button:hover, body.dark header input:focus, body.dark header select:focus {
+body.dark header button:hover,
+body.dark header input:focus,
+body.dark header select:focus {
   box-shadow: 0 3px 10px var(--shadow-dark);
   background-color: var(--primary-color);
   border-color: var(--accent-color);
@@ -126,13 +134,63 @@ body.dark .column:hover {
 
 /* Анимации */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Общие стили для кнопок во всем приложении (для лучшей адаптации) */
+button,
+input[type="button"],
+input[type="submit"] {
+  padding: 12px 18px;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+  transition: transform var(--transition-time), background-color var(--transition-time), box-shadow var(--transition-time);
+  border: none;
+  min-width: 120px; /* Минимальная ширина для touch */
+  touch-action: manipulation; /* Улучшает поведение на touch устройствах */
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.03);
+  box-shadow: 0 3px 10px var(--shadow-light);
+}
+
+body.dark button,
+body.dark input[type="button"],
+body.dark input[type="submit"] {
+  background-color: var(--primary-hover);
+  color: #e9ecef;
+}
+
+body.dark button:hover,
+body.dark input[type="button"]:hover,
+body.dark input[type="submit"]:hover {
+  background-color: var(--primary-color);
+  box-shadow: 0 3px 10px var(--shadow-dark);
 }
 
 /* Мобильная версия (улучшенный responsive design) */
@@ -140,7 +198,6 @@ body.dark .column:hover {
   .columns {
     gap: 20px;
   }
-
   .column {
     flex-basis: 45%; /* Две колонки на планшетах */
   }
@@ -150,28 +207,39 @@ body.dark .column:hover {
   .app {
     padding: 15px; /* Меньше padding на планшетах */
   }
-
   header {
     flex-direction: column; /* Стек для мобильных */
     align-items: stretch; /* Растягиваем элементы */
     padding: 12px;
     gap: 8px; /* Ближе элементы */
   }
-
-  header button, header input, header select {
+  header button,
+  header input,
+  header select {
     width: 100%; /* Полная ширина */
     margin: 4px 0; /* Меньше маржина */
     font-size: 0.95em; /* Чуть меньше текст */
+    padding: 14px 20px; /* Увеличенный padding для touch */
+    min-height: 48px; /* Минимальная высота для touch (рекомендация Google для мобильных) */
+    touch-action: manipulation; /* Улучшает поведение на touch */
   }
-
   .columns {
     flex-direction: column;
     gap: 20px;
   }
-
   .column {
     margin-bottom: 20px;
     min-height: 200px; /* Меньше высота на мобильных */
+  }
+  /* Улучшения для всех кнопок на мобильных */
+  button,
+  input[type="button"],
+  input[type="submit"] {
+    width: 100%; /* Полная ширина для легкого нажатия */
+    padding: 14px 20px; /* Больше padding для пальцев */
+    font-size: 1.1em; /* Чуть больше текст для читаемости */
+    min-height: 48px; /* Стандарт для touch */
+    margin: 8px 0; /* Больше пространства между кнопками */
   }
 }
 
@@ -179,18 +247,30 @@ body.dark .column:hover {
   .app {
     padding: 10px; /* Еще меньше на маленьких экранах */
   }
-
   header {
     font-size: 0.85em; /* Меньше шрифт */
     padding: 10px;
   }
-
+  header button,
+  header input,
+  header select {
+    font-size: 1em; /* Нормальный размер текста */
+    padding: 16px 22px; /* Еще больше padding */
+    min-height: 52px; /* Чуть выше для комфорта */
+  }
   .column h2 {
     font-size: 1.1em;
     letter-spacing: 1px;
   }
-
   .column {
     padding: 15px;
+  }
+  /* Дополнительные улучшения для кнопок на очень маленьких экранах */
+  button,
+  input[type="button"],
+  input[type="submit"] {
+    font-size: 1em; /* Нормальный размер текста */
+    padding: 16px 22px; /* Еще больше padding */
+    min-height: 52px; /* Чуть выше для комфорта */
   }
 }

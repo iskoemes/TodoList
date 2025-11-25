@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import format from 'date-fns/format';
 import isAfter from 'date-fns/isAfter';
 
 function TaskCard({ task, onUpdate, onDelete, onEdit, isSelected, onSelect }) {
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
   const isOverdue = task.deadline && isAfter(new Date(), new Date(task.deadline)) && task.status !== 'completed';
   const priorityColors = { low: 'green', medium: 'yellow', high: 'red' };
+
+  const handleDelete = () => {
+    onDelete(task.id);
+    setConfirmOpen(false);
+  };
 
   return (
     <div className={`card ${isOverdue ? 'overdue' : ''}`} style={{ borderColor: priorityColors[task.priority] }}>
@@ -14,13 +21,19 @@ function TaskCard({ task, onUpdate, onDelete, onEdit, isSelected, onSelect }) {
       <span>Приоритет: {task.priority}</span>
       {task.deadline && <span>Дедлайн: {format(new Date(task.deadline), 'dd.MM.yyyy')}</span>}
       {isOverdue && <span>⚠️ Просрочено</span>}
-      {/* <select value={task.status} onChange={e => onUpdate({ ...task, status: e.target.value })}>
-        <option value="todo">To Do</option>
-        <option value="in-progress">In Progress</option>
-        <option value="completed">Completed</option>
-      </select> */}
+
       <button onClick={onEdit}>Редактировать</button>
-      <button onClick={() => onDelete(task.id)}>Удалить</button>
+      <button onClick={() => setConfirmOpen(true)}>Удалить</button>
+
+      {confirmOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Вы уверены, что хотите удалить задачу "{task.title}"?</p>
+            <button onClick={handleDelete}>Да</button>
+            <button onClick={() => setConfirmOpen(false)}>Нет</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

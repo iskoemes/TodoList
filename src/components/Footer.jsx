@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Footer() {
-  return <footer>© 2023 ToDo App v1.0</footer>;
+  return <footer>© 2025 ToDo</footer>;
 }
 
 export default Footer;

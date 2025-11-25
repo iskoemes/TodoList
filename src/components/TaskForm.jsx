@@ -31,44 +31,45 @@ function TaskForm({ task = {}, onSave, onClose }) {
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <h2>{task.id ? 'Редактировать задачу' : 'Создать задачу'}</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Название"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-          <textarea
-            placeholder="Описание"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <select value={priority} onChange={(e) => setPriority(e.target.value)}>
-            <option value="low">Низкий</option>
-            <option value="medium">Средний</option>
-            <option value="high">Высокий</option>
-          </select>
-          <input
-            type="date"
-            value={deadline}
-            onChange={(e) => setDeadline(e.target.value)}
-          />
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option value="todo">To Do</option>
-            <option value="in-progress">In Progress</option>
-            <option value="completed">Completed</option>
-          </select>
-          <div style={{ marginTop: '15px' }}>
-            <button type="submit">Сохранить</button>
-            <button type="button" onClick={onClose}>Отмена</button>
-          </div>
-        </form>
+   <div className="modal-overlay" onClick={onClose}>
+  <div className="modal" onClick={(e) => e.stopPropagation()}>
+    <h2>{task.id ? 'Редактировать задачу' : 'Создать задачу'}</h2>
+    <form onSubmit={handleSubmit} className="task-form">
+      <input
+        type="text"
+        placeholder="Название"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+      />
+      <textarea
+        placeholder="Описание"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+      <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+        <option value="low">Низкий</option>
+        <option value="medium">Средний</option>
+        <option value="high">Высокий</option>
+      </select>
+      <input
+        type="date"
+        value={deadline}
+        onChange={(e) => setDeadline(e.target.value)}
+      />
+      <select value={status} onChange={(e) => setStatus(e.target.value)}>
+        <option value="todo">To Do</option>
+        <option value="in-progress">In Progress</option>
+        <option value="completed">Completed</option>
+      </select>
+      <div className="modal-buttons">
+        <button type="submit">Сохранить</button>
+        <button type="button" onClick={onClose}>Отмена</button>
       </div>
-    </div>
+    </form>
+  </div>
+</div>
+
   );
 }
 

@@ -69,7 +69,8 @@ body.dark .card span {
   color: #aaa;
 }
 
-.card select, .card button {
+.card select,
+.card button {
   margin-top: 10px;
   padding: 10px 15px; /* Больше padding */
   border: 1px solid transparent;
@@ -82,19 +83,22 @@ body.dark .card span {
   margin-right: 10px; /* Расстояние между кнопками/селектами */
 }
 
-.card select:focus, .card button:hover {
+.card select:focus,
+.card button:hover {
   transform: scale(1.03);
   background-color: var(--primary-hover);
   box-shadow: 0 2px 8px var(--shadow-light);
   border-color: var(--accent-color);
 }
 
-body.dark .card select, body.dark .card button {
+body.dark .card select,
+body.dark .card button {
   background-color: var(--primary-hover);
   border-color: #444;
 }
 
-body.dark .card select:focus, body.dark .card button:hover {
+body.dark .card select:focus,
+body.dark .card button:hover {
   background-color: var(--primary-color);
   box-shadow: 0 2px 8px var(--shadow-dark);
   border-color: var(--accent-color);
@@ -151,7 +155,9 @@ body.dark .modal {
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
 }
 
-.modal input, .modal textarea, .modal select {
+.modal input,
+.modal textarea,
+.modal select {
   width: 100%;
   margin: 15px 0; /* Больше маржина */
   padding: 14px; /* Больше padding */
@@ -161,18 +167,24 @@ body.dark .modal {
   transition: border-color var(--transition-time), box-shadow var(--transition-time);
 }
 
-.modal input:focus, .modal textarea:focus, .modal select:focus {
+.modal input:focus,
+.modal textarea:focus,
+.modal select:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.25); /* Мягче свечение */
 }
 
-body.dark .modal input, body.dark .modal textarea, body.dark .modal select {
+body.dark .modal input,
+body.dark .modal textarea,
+body.dark .modal select {
   background: #333333;
   color: #ffffff;
   border-color: #555555;
 }
 
-body.dark .modal input:focus, body.dark .modal textarea:focus, body.dark .modal select:focus {
+body.dark .modal input:focus,
+body.dark .modal textarea:focus,
+body.dark .modal select:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.25);
 }
@@ -220,18 +232,72 @@ body.dark .modal button:hover {
 
 /* Анимации */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes fadeInOverlay {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes modalPop {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Общие стили для кнопок во всем приложении (для лучшей адаптации) */
+button,
+input[type="button"],
+input[type="submit"] {
+  padding: 12px 18px;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+  transition: transform var(--transition-time), background-color var(--transition-time), box-shadow var(--transition-time);
+  border: none;
+  min-width: 120px; /* Минимальная ширина для touch */
+  touch-action: manipulation; /* Улучшает поведение на touch устройствах */
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.03);
+  box-shadow: 0 3px 10px var(--shadow-light);
+}
+
+body.dark button,
+body.dark input[type="button"],
+body.dark input[type="submit"] {
+  background-color: var(--primary-hover);
+  color: #e9ecef;
+}
+
+body.dark button:hover,
+body.dark input[type="button"]:hover,
+body.dark input[type="submit"]:hover {
+  background-color: var(--primary-color);
+  box-shadow: 0 3px 10px var(--shadow-dark);
 }
 
 /* Мобильная версия (улучшенный responsive design) */
@@ -240,7 +306,6 @@ body.dark .modal button:hover {
     padding: 18px;
     margin: 18px 0;
   }
-
   .modal {
     max-width: 90%;
   }
@@ -251,48 +316,136 @@ body.dark .modal button:hover {
     padding: 15px;
     margin: 15px 0;
   }
-
   .card h3 {
     font-size: 1.2em;
   }
-
   .modal {
     padding: 25px;
     width: 95%;
     max-width: none; /* Полная ширина на мобильных */
   }
-
-  .modal input, .modal textarea, .modal select {
+  .modal input,
+  .modal textarea,
+  .modal select {
     padding: 12px;
     font-size: 1em;
     margin: 12px 0;
   }
-
   .modal button {
     padding: 12px 18px;
     width: 100%; /* Полная ширина кнопок */
     margin: 8px 0; /* Стек для мобильных */
   }
+  /* Улучшения для всех кнопок на мобильных */
+  button,
+  input[type="button"],
+  input[type="submit"] {
+    width: 100%; /* Полная ширина для легкого нажатия */
+    padding: 14px 20px; /* Больше padding для пальцев */
+    font-size: 1.1em; /* Чуть больше текст для читаемости */
+    min-height: 48px; /* Стандарт для touch */
+    margin: 8px 0; /* Больше пространства между кнопками */
+  }
+  .card button,
+  .card select {
+    width: 100%; /* Полная ширина */
+    padding: 14px 20px; /* Увеличенный padding для touch */
+    min-height: 48px; /* Минимальная высота для touch */
+  }
+  .modal-buttons {
+    flex-direction: column; /* Стек для мобильных */
+    gap: 10px;
+  }
+  .modal-buttons button {
+    width: 100%;
+    padding: 14px 20px;
+    min-height: 48px;
+  }
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрируем по горизонтали */
+}
+
+.task-form input,
+.task-form textarea,
+.task-form select {
+  width: 100%;
+  max-width: 400px; /* Ограничиваем ширину, чтобы не растягивались */
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.task-form textarea {
+  resize: vertical; /* Позволяем менять высоту, ширина фиксирована */
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Расстояние между кнопками */
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  background-color: var(--primary-color);
+  color: white;
+  transition: 0.3s;
+}
+
+.modal-buttons button:hover {
+  background-color: var(--primary-hover);
 }
 
 @media (max-width: 480px) {
-  .card p, .card span {
+  .card p,
+  .card span {
     font-size: 0.9em;
   }
-
   .card h3 {
     font-size: 1.1em;
   }
-
   .error {
     font-size: 1em;
   }
-
   .modal {
     padding: 20px;
   }
-
-  .modal input, .modal textarea, .modal select {
+  .modal input,
+  .modal textarea,
+  .modal select {
     font-size: 0.95em;
+  }
+  /* Дополнительные улучшения для кнопок на очень маленьких экранах */
+  button,
+  input[type="button"],
+  input[type="submit"] {
+    font-size: 1em; /* Нормальный размер текста */
+    padding: 16px 22px; /* Еще больше padding */
+    min-height: 52px; /* Чуть выше для комфорта */
+  }
+  .card button,
+  .card select {
+    padding: 16px 22px;
+    min-height: 52px;
+  }
+  .modal button {
+    padding: 16px 22px;
+    min-height: 52px;
+  }
+  .modal-buttons button {
+    padding: 16px 22px;
+    min-height: 52px;
   }
 }
