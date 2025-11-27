@@ -1,8 +1,9 @@
+// src/components/TaskCard.jsx
 import React, { useState } from 'react';
 import format from 'date-fns/format';
 import isAfter from 'date-fns/isAfter';
 
-function TaskCard({ task, onUpdate, onDelete, onEdit, isSelected, onSelect }) {
+function TaskCard({ task, onUpdate, onDelete, onEdit, isSelected, onSelect, onShowHistory }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const isOverdue = task.deadline && isAfter(new Date(), new Date(task.deadline)) && task.status !== 'completed';
@@ -23,6 +24,7 @@ function TaskCard({ task, onUpdate, onDelete, onEdit, isSelected, onSelect }) {
       {isOverdue && <span>⚠️ Просрочено</span>}
 
       <button onClick={onEdit}>Редактировать</button>
+      <button onClick={() => onShowHistory(task)}>История</button>
       <button onClick={() => setConfirmOpen(true)}>Удалить</button>
 
       {confirmOpen && (

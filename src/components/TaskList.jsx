@@ -1,10 +1,11 @@
+// src/components/TaskList.jsx
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import TaskCard from './TaskCard';
 
 const columns = ['todo', 'in-progress', 'completed'];
 
-function TaskList({ tasks, onUpdate, onDelete, onEdit, selectedIds, onSelectChange }) {
+function TaskList({ tasks, onUpdate, onDelete, onEdit, selectedIds, onSelectChange, onShowHistory }) {
   const groupedTasks = columns.reduce((acc, status) => ({ ...acc, [status]: tasks.filter(t => t.status === status) }), {});
 
   const onDragEnd = (result) => {
@@ -37,6 +38,7 @@ function TaskList({ tasks, onUpdate, onDelete, onEdit, selectedIds, onSelectChan
                           onSelect={(checked) => {
                             onSelectChange(checked ? [...selectedIds, task.id] : selectedIds.filter(id => id !== task.id));
                           }}
+                          onShowHistory={onShowHistory}
                         />
                       </div>
                     )}

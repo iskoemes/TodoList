@@ -1,3 +1,4 @@
+// src/components/Sorts.jsx
 import React from 'react';
 
 function Sorts({ sort, onChange }) {

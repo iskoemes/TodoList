@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState, useEffect } from 'react';
 import LocalStorageService from './storage/LocalStorageService';
 import TaskList from './components/TaskList';
@@ -7,10 +8,13 @@ import SearchBar from './components/SearchBar';
 import Filters from './components/Filters';
 import Sorts from './components/Sorts';
 import Footer from './components/Footer';
-import TaskForm from './components/TaskForm';
+import TaskForm from './components/TaskForm'; 
+import TrashBin from './components/TrashBin';
+import EditHistoryModal from './components/EditHistoryModal';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [deletedTasks, setDeletedTasks] = useState([]);
   const [theme, setTheme] = useState('light');
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState({ status: '', priority: '', hasDeadline: false, overdue: false });
@@ -18,10 +22,13 @@ function App() {
   const [selectedIds, setSelectedIds] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [showTrash, setShowTrash] = useState(false);
+  const [showHistoryForTask, setShowHistoryForTask] = useState(null);
 
   useEffect(() => {
     const data = LocalStorageService.getData();
     setTasks(data.tasks);
+    setDeletedTasks(data.deletedTasks || []);
     setTheme(data.settings.theme);
     document.body.className = data.settings.theme;
   }, []);
@@ -60,8 +67,22 @@ function App() {
 
   const handleDeleteSelected = () => {
     LocalStorageService.deleteTasks(selectedIds);
-    setTasks(tasks.filter(t => !selectedIds.includes(t.id)));
+    const updatedData = LocalStorageService.getData();
+    setTasks(updatedData.tasks);
+    setDeletedTasks(updatedData.deletedTasks || []);
     setSelectedIds([]);
+  };
+
+  const handleRestore = (id) => {
+    LocalStorageService.restoreTask(id);
+    const updatedData = LocalStorageService.getData();
+    setTasks(updatedData.tasks);
+    setDeletedTasks(updatedData.deletedTasks || []);
+  };
+
+  const handleClearTrash = () => {
+    LocalStorageService.clearDeletedTasks();
+    setDeletedTasks([]);
   };
 
   const openModal = (task = null) => {
@@ -76,6 +97,17 @@ function App() {
 
   const handleSave = (savedTask) => {
     if (editingTask) {
+      const oldTask = tasks.find(t => t.id === savedTask.id);
+      const changes = [];
+      if (savedTask.title !== oldTask.title) changes.push(`Название на "${savedTask.title}"`);
+      if (savedTask.description !== oldTask.description) changes.push(`Описание`);
+      if (savedTask.priority !== oldTask.priority) changes.push(`Приоритет на ${savedTask.priority}`);
+      if (savedTask.deadline !== oldTask.deadline) changes.push(`Дедлайн`);
+      if (savedTask.status !== oldTask.status) changes.push(`Статус на ${savedTask.status}`);
+      if (changes.length > 0) {
+        const changeStr = changes.join(', ');
+        savedTask.editHistory = [...(oldTask.editHistory || []), { date: new Date().toISOString(), changes: changeStr }];
+      }
       LocalStorageService.updateTask(savedTask);
       setTasks(tasks.map(t => t.id === savedTask.id ? savedTask : t));
     } else {
@@ -94,6 +126,7 @@ function App() {
         <Filters filters={filters} onChange={setFilters} />
         <Sorts sort={sort} onChange={setSort} />
         {selectedIds.length > 0 && <button onClick={handleDeleteSelected}>Удалить выбранные</button>}
+        <button onClick={() => setShowTrash(true)}>Корзина</button>
       </header>
       <TaskList
         tasks={filteredTasks}
@@ -103,14 +136,31 @@ function App() {
         }}
         onDelete={(id) => {
           LocalStorageService.deleteTask(id);
-          setTasks(tasks.filter(t => t.id !== id));
+          const updatedData = LocalStorageService.getData();
+          setTasks(updatedData.tasks);
+          setDeletedTasks(updatedData.deletedTasks || []);
         }}
         onEdit={openModal}
         selectedIds={selectedIds}
         onSelectChange={setSelectedIds}
+        onShowHistory={(task) => setShowHistoryForTask(task)}
       />
       {modalOpen && (
         <TaskForm task={editingTask || {}} onSave={handleSave} onClose={closeModal} />
+      )}
+      {showTrash && (
+        <TrashBin 
+          deletedTasks={deletedTasks} 
+          onRestore={handleRestore} 
+          onClose={() => setShowTrash(false)} 
+          onClear={handleClearTrash}
+        />
+      )}
+      {showHistoryForTask && (
+        <EditHistoryModal 
+          task={showHistoryForTask} 
+          onClose={() => setShowHistoryForTask(null)} 
+        />
       )}
       <Footer />
     </div>

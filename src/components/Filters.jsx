@@ -1,3 +1,4 @@
+// src/components/Filters.jsx
 import React from 'react';
 
 function Filters({ filters, onChange }) {

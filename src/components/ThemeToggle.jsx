@@ -1,3 +1,4 @@
+// src/components/ThemeToggle.jsx
 import React from 'react';
 
 function ThemeToggle({ theme, onChange }) {
